@@ -19,10 +19,10 @@
     ],
     'sequence': 1,
     'data': [
-        'security/ir.model.access.csv',
-        'views/trp_transfer_request_view.xml',
-        'data/ir_sequence_data.xml',
-        'data/template_yeu_cau_chuyen_kho.xml',
-        'views/product_template_view.xml'
+        'oris_security/ir.model.access.csv',
+        'oris_views/trp_transfer_request_view.xml',
+        'oris_data/ir_sequence_data.xml',
+        'oris_data/template_yeu_cau_chuyen_kho.xml',
+        'oris_views/product_template_view.xml'
     ],
 }
