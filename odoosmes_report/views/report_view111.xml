@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<odoo>
+    <data>
+
+   
+        <record id="act_report_xml_view_extend1" model="ir.ui.view">
+            <field name="name">ir.actions.report.extended.xml</field>
+            <field name="model">ir.actions.report</field>
+            <field name="inherit_id" ref="base.act_report_xml_view"/>
+            <field name="arch" type="xml">
+                <field name='name' position="after">
+                    <field name='template_id' />
+                    <field name='output_file'/>
+                    <field name="modules_name"/>
+                    <field name="rp_path"/>
+                </field>
+            </field>
+        </record>
+        <odoo>
+   
+</odoo>
+
+    </data>
+</odoo>

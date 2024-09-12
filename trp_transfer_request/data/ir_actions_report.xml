@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="trp_stock_report_tong_hop_xnt" model="ir.actions.report">
+            <field name="model">trp.transfer.request</field>
+            <field name="name">Tổng hợp nhập xuất tồn</field>
+            <field name="report_name">trp_stock_report_tong_hop_xnt</field>
+            <field name="print_report_name">trp_stock_report_tong_hop_xnt</field>
+             <field name="rp_path">data/template_tong_hop_nhap_xuat_ton.ods</field>
+            <field name="binding_model_id" ref="trp_transfer_request.model_trp_transfer_request"/>
+            <field name="binding_type">report</field>
+            <field name="report_type">controller</field>
+            <field name="output_file">xlsx</field>
+            <field name="modules_name">trp_transfer_request</field>
+            <field name="ma">/report/odoosmes.com/trp_stock_report_tong_hop_xnt</field>
+        </record>
+
+    </data>
+</odoo>

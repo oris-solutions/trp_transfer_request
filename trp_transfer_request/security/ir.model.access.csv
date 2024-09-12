@@ -1,0 +1,5 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+trp_transfer_request_group_user,trp.transfer.request,model_trp_transfer_request,base.group_user,1,1,1,1
+trp_transfer_request_line_group_user,trp.transfer.request.line,model_trp_transfer_request_line,base.group_user,1,1,1,1
+
+

@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="trp_transfer_request_yeu_cau_chuyen_kho" model="ir.actions.report">
+            <field name="model">trp.transfer.request</field>
+            <field name="name">Yêu Cầu Chuyển Kho</field>
+            <field name="report_name">trp_transfer_request_yeu_cau_chuyen_kho</field>
+            <field name="print_report_name">trp_transfer_request_yeu_cau_chuyen_kho</field>
+            <field name="rp_path">data/yeu_cau_chuyen_kho.ods</field>
+            <field name="binding_model_id" ref="trp_transfer_request.model_trp_transfer_request"/>
+            <field name="binding_type">report</field>
+            <field name="report_type">controller</field>
+            <field name="output_file">xlsx</field>
+            <field name="modules_name">trp_transfer_request</field>
+            <field name="ma">/report/odoosmes.com/trp_transfer_request_yeu_cau_chuyen_kho</field>
+        </record>
+
+    </data>
+</odoo>
+<!-- <odoo>
+    <record id="trp_transfer_request_yeu_cau_chuyen_kho" model="ir.actions.report">
+        <field name="name">Yêu Cầu Chuyển Kho</field>
+        <field name="model">trp.transfer.request</field>
+        <field name="report_name">trp_transfer_request_yeu_cau_chuyen_kho</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_file">trp_transfer_request_yeu_cau_chuyen_kho</field>
+        <field name="print_report_name">trp_transfer_request_yeu_cau_chuyen_kho</field>
+        <field name="binding_model_id" ref="trp_transfer_request.model_trp_transfer_request"/>
+        <field name="binding_type">report</field>
+    </record>
+
+    <template id="report_trp_transfer_request_yeu_cau_chuyen_kho">
+        <t t-call="web.html_container">
+            <t t-foreach="doc_ids" t-as="doc_id">
+                <t t-call="your_module.report_template">
+                </t>
+            </t>
+        </t>
+    </template>
+</odoo> 
+<odoo>
+    <data>
+
+        <record id="trp_transfer_request_yeu_cau_chuyen_kho" model="ir.actions.report">
+            <field name="model">trp.transfer.request</field>
+            <field name="name">Yêu Cầu Chuyển Kho</field>
+            <field name="report_name">trp_transfer_request_yeu_cau_chuyen_kho</field>
+            <field name="print_report_name">trp_transfer_request_yeu_cau_chuyen_kho</field>
+            <field name="rp_path">data/yeu_cau_chuyen_kho.ods</field>
+            <field name="binding_model_id" ref="trp_transfer_request.model_trp_transfer_request"/>
+            <field name="binding_type">report</field>
+            <field name="report_type">controller</field>
+            <field name="output_file">xlsx</field>
+            <field name="modules_name">trp_transfer_request</field>
+            <field name="ma">/report/odoosmes.com/trp_transfer_request_yeu_cau_chuyen_kho</field>
+        </record>
+
+    </data>
+</odoo>
+-->

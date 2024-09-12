@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <record id="trp_transfer_request_tree_view" model="ir.ui.view">
+           <field name="name">trp_transfer_request_tree_view</field>
+           <field name="model">trp.transfer.request</field>
+           <field name="arch" type="xml">
+               <tree string="Report">
+                   <field name="name"/>
+                   <field name="date"/>
+                   <field name="owner_id" string="Người yêu cầu"/>
+                   <field name="warehouse_out_id"/>
+                   <field name="warehouse_in_id"/>
+                   <field name="date_schedule_out" invisible="1"/>
+                   <field name="date_schedule_in"/>
+                   <field name="date_done"/>
+                   <field name="state"/>
+               </tree>
+           </field>
+       </record>
+
+        <record model="ir.ui.view" id="form_trp_transfer_request_view">
+            <field name="name">form_trp_transfer_request_view</field>
+            <field name="model">trp.transfer.request</field>
+            <field name="arch" type="xml">
+                <form string="Transfer Request">
+                    <header>
+<!--                        <button name="check_available" type="object" states='draft,request' string="Kiểm tra khả dụng"-->
+<!--                                class="oe_highlight"/>-->
+                        <button name="action_confirm" states='draft' type="object"
+                                string="Xác nhận" context="{'turn_view_readonly':True}"
+                                class="oe_highlight"/>
+                        <button name="action_cancel" states='draft,request,ongoing' type="object" string="Huỷ" class="oe_highlight"/>
+                        <button name="action_done" states='request' type="object" string="Hoàn thành" invisible="1"
+                                class="oe_highlight"/>
+                        <button name="action_update_states" invisible="1" states='request' groups="base.group_no_one" type="object" string="Điều chỉnh trạng thái" class="oe_highlight"/>
+                        <button name="action_update_quantity_in_out" states='request,ongoing,trouble,done' groups="base.group_system" type="object" string="Cập nhật số lượng nhập/xuất" class="oe_highlight"/>
+                        <button name="action_update_quantity_demand_inbound" states='request,ongoing,trouble,done' groups="base.group_system" type="object" string="Cập nhật demand phiếu nhập" class="oe_highlight"/>
+                        <field name="state" widget="statusbar" statusbar_visible="draft,request,ongoing,trouble,done,cancel"
+                               statusbar_colors='{"cancel":"red"}'/>
+                    </header>
+                    <sheet>
+                        <div>
+                            <div class="oe_button_box" name="button_box" groups="base.group_user"
+                                 attrs="{'invisible':[('picking_count', '=', 0)]}">
+                                <button class="oe_stat_button" name="action_stock_picking" type="object"
+                                        icon="fa-truck">
+                                    <field name="picking_count" widget="statinfo" string="Phiếu kho"/>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="oe_title">
+                            <h1>
+                                <field name="name" readonly="1"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="company_id" invisible="1"/>
+                                <field name="owner_id" string="Người yêu cầu" required="1" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+                                <field name="warehouse_in_id" required="1" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+                                <field name="route_id" required="1" options="{'no_create_edit': True}"
+                                       domain="[('supplied_wh_id', '=', warehouse_in_id)]" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+                                <field name="warehouse_out_id" required="1" readonly="1"/>
+                            </group>
+                            <group>
+                                <field name="date" required="1" readonly="1"/>
+<!--                                <field name="date_schedule_out"  attrs="{'readonly': [('state', '!=', 'draft')]}"/>-->
+                                <field name="date_schedule_in" attrs="{'readonly': [('state', '!=', 'draft')]}" />
+                                <field name="date_done" readonly="1"/>
+                            </group>
+                            <field name="description" placeholder="Diễn giải" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+                        </group>
+                        <notebook>
+                            <page string="Thông tin chi tiết">
+                                <field name="trp_transfer_request_line_ids" attrs="{'readonly': [('state', '!=', 'draft')]}">
+                                    <tree editable="bottom" decoration-danger="flag_product_available == 2" decoration-success="flag_product_available == 1">
+                                        <field name="product_id" required="1" domain="[('type', '!=', 'service'), ('product_tmpl_id.transfer_ok','=',True)]"/>
+                                        <field name="product_name" required="1"/>
+                                        <field name="product_uom" readonly="1"/>
+                                        <field name="lot_id" domain="[('product_id', '=', product_id)]"/>
+                                        <field name="product_qty" required="1"/>
+                                        <field name="qty_in_warehouse" invisible="1"/>
+                                        <field name="flag_product_available" invisible="1" />
+                                        <field name="qty_delivered" readonly="1"/>
+                                        <field name="qty_receipted" readonly="1"/>
+                                        <field name="qty_diff" readonly="1"/>
+                                        <button name="split_quantities" class="oe_edit_only" type="object" string="Tách" icon="fa-plus"
+                                                attrs="{'column_invisible': [('parent.state', '!=', 'draft')], 'invisible': [('product_qty', 'in', (0, 1))]}"/>
+                                    </tree>
+                                </field>
+                            </page>
+                            <page string="Thông tin khác">
+                                <group>
+                                    <group>
+                                        <field name="create_uid"/>
+                                        <field name="address_in_id"/>
+                                        <field name="address_in"/>
+                                        <field name="address_out_id"/>
+                                        <field name="address_out"/>
+                                    </group>
+                                    <group>
+                                        <field name="move_type" required="1"/>
+                                    </group>
+                                </group>
+                            </page>
+                        </notebook>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" widget="mail_followers"/>
+                        <field name="activity_ids" widget="mail_activity"/>
+                        <field name="message_ids" widget="mail_thread"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+        <record id="search_trp_transfer_request_view" model="ir.ui.view">
+            <field name="name">search_trp_transfer_request_view</field>
+            <field name="model">trp.transfer.request</field>
+            <field name="arch" type="xml">
+                <search string="Search trp transfer request">
+                    <field name="name" string="Số phiếu" filter_domain="['|', ('name', 'ilike', self), ('description', 'ilike', self)]"/>
+                    <field name="owner_id"/>
+                    <field name="warehouse_in_id"/>
+                    <field name="warehouse_out_id"/>
+                    <filter string="Công việc của tôi" name="my_work" domain="[('create_uid','=', uid)]"/>
+                </search>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_trp_transfer_request_view">
+            <field name="name">Yêu cầu chuyển kho</field>
+            <field name="res_model">trp.transfer.request</field>
+            <field name="view_mode">tree,form,kanban</field>
+            <field name="context">{'search_default_my_work': 1}</field>
+        </record>
+        <menuitem id="menu_trp_transfer_request_view" name="Yêu cầu chuyển kho"
+                  parent="stock.menu_stock_warehouse_mgmt" sequence="-20" action="action_trp_transfer_request_view"/>
+    </data>
+</openerp>
