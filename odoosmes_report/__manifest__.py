@@ -15,11 +15,11 @@
         'web'
     ],
     'data': [
-        'views/report_view111.xml'
+        'oris_views/report_view111.xml'
     ],
     'assets': {
         'web.assets_backend': [
-            'odoosmes_report/static/src/js/odoosmes_report.js',
+            'oris_odoosmes_report/static/src/js/odoosmes_report.js',
         ],
     },
 
